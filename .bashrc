@@ -2,6 +2,10 @@ if [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
 fi
 
+if [[ -f ~/.dir_colors ]]; then
+  eval `dircolors ~/.dir_colors`
+fi
+
 xhost +local:root > /dev/null 2>&1
 
 complete -cf sudo
@@ -19,8 +23,6 @@ shopt -s nocaseglob
 export HISTSIZE=10000
 export HISTFILESIZE=${HISTSIZE}
 export HISTCONTROL=ignoreboth
-export TERM=xterm-256color
-# export DVTM_TERM=dvtm-256color
 export EDITOR=vim
 
 alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
@@ -32,6 +34,7 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano PKGBUILD'
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
+alias emacs='TERM=xterm-256color emacs'
 alias spacemacs='emacs'
 
 # ex - archive extractor
@@ -59,7 +62,7 @@ ex ()
 }
 
 powerline_path=$(python -c 'import os, sys, powerline; sys.stdout.write(os.path.dirname(powerline.__file__))' 2> /dev/null)
-if [[ "$powerline_path" ]]; then
+if (echo "$TERM" | grep -q "256color") && [[ "$powerline_path" ]]; then
   powerline-daemon -q
   POWERLINE_BASH_CONTINUATION=1
   POWERLINE_BASH_SELECT=1
