@@ -34,8 +34,9 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano PKGBUILD'
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
-alias emacs='TERM=xterm-256color emacs'
+alias emacs='env TERM=xterm-256color emacs'
 alias spacemacs='emacs'
+alias dotf='dotfiles'
 
 # ex - archive extractor
 # usage: ex <file>
